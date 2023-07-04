@@ -85,4 +85,15 @@ class AuthController extends BaseController
 
         return response()->json(['message' => 'Login failed: Incorrect password.'], 401);
     }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+
+        Log::info('User logged out successfully', ['user_id' => $user->id]);
+
+        return response()->json(['message' => 'Logout successful.']);
+    }
+
 }

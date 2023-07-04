@@ -25,6 +25,7 @@ class TodoController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
+            'priority' => 'required|integer|digits_between:1,4'
         ]);
 
         /** @var User $user */ // Specify the type of $user as User model
@@ -48,6 +49,7 @@ class TodoController extends Controller
         
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
+            'priority' => 'required|integer|digits_between:1,4'
         ]);
 
         $todo->update($validatedData);

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import classNames from 'classnames'
 
 import { FaUser as UserIcon, FaPlus as CreateIcon } from 'react-icons/fa'
@@ -10,7 +10,12 @@ import ModalDeleteConfirm from '../Modals/ModalConfirm'
 import { TodoType } from '../../types/todo'
 import { MedalCreateOrEditType } from '../../types/modal'
 
+import { AuthContext } from '../Auth/AuthProvider'
+import { logoutUser } from '../../utils/api/auth'
+import { config } from '../../config/axios'
+
 type SideProps = {
+  username: string
   modalCreateOrEdit: MedalCreateOrEditType
   setModalCreateOrEdit: (newMedal: MedalCreateOrEditType) => void
   createTodo: (newTodo: TodoType) => void
@@ -29,6 +34,7 @@ type SideProps = {
  * @param deleteAllTodos - The function to delete all todos / La función para eliminar todos.
  */
 const Side: React.FC<SideProps> = ({
+  username,
   modalCreateOrEdit,
   setModalCreateOrEdit,
   createTodo,
@@ -39,6 +45,23 @@ const Side: React.FC<SideProps> = ({
     open: false,
     action: null,
   })
+  const { token, isAuthenticated, logoutGuest, logout } =
+    useContext(AuthContext)
+
+  const handleLogoOut = async () => {
+    if (isAuthenticated) {
+      const configToken = {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      await logoutUser(configToken, logout)
+    } else {
+      logoutGuest()
+    }
+  }
 
   return (
     <>
@@ -63,7 +86,7 @@ const Side: React.FC<SideProps> = ({
         )}
       >
         <div className='text-gray-200 font-bold mt-8'>
-          <h2>User Name</h2>
+          <h2 className='font-bold text-xl text-center'>{username}</h2>
           <div
             className={classNames(
               'flex flex-col justify-center items-center',
@@ -74,6 +97,16 @@ const Side: React.FC<SideProps> = ({
             <UserIcon size={40} />
           </div>
         </div>
+        <button
+          onClick={handleLogoOut}
+          className={classNames(
+            'btn duration-300 hover:scale-105',
+            'bg-red-400 border-red-400 hover:bg-red-500 hover:border-red-500',
+            'shadow-xl mt-12 rounded-lg p-2'
+          )}
+        >
+          <h1 className='text-white font-bold text-lg'>LOG OUT</h1>
+        </button>
         <div
           className={classNames(
             'flex justify-center items-center',

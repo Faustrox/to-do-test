@@ -1,6 +1,7 @@
 import { MedalCreateOrEditType } from './modal'
 
 export type TodoType = {
+  id?: number
   title: string
   priority: number
 }
