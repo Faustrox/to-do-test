@@ -12,7 +12,7 @@ This is a basic todo app
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/Faustrox/to-do-test.git
+   `git clone https://github.com/Faustrox/to-do-test.git`
 
 2. Setup the environment:
 
