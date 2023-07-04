@@ -1,8 +1,6 @@
-# My Awesome Project
+# To do webapp
 
-A brief description of my awesome project.
-
-![Project Logo](https://example.com/awesome-project-logo.png)
+This is a basic todo app
 
 ## Requirements
 
