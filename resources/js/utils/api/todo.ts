@@ -21,7 +21,7 @@ export const createTodo = async (todo: TodoType, configToken) => {
 
 export const editTodo = async (id: number, todo: TodoType, configToken) => {
   try {
-    await axios.put('/api/todo', todo, configToken)
+    await axios.put('/api/todo/' + id, todo, configToken)
     return await getTodos(configToken)
   } catch (err) {
     console.error(err)
